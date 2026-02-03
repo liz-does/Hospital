@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Services - Apex Medical Center</title>
+    <meta name="description" content="Experience AI-powered symptom checking and 3D anatomy visualization at Apex Medical Center">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="script.js" as="script">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                <span class="nav-logo-text">Apex Medical Center</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link active">Services</a></li>
+                <li><a href="map.html" class="nav-link">Map</a></li>
+                <li><a href="booking.html" class="nav-link">Book</a></li>
+                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 60vh;">
+        <div class="hero-content">
+            <h1 class="hero-title">Smart Medical Services</h1>
+            <p class="hero-subtitle">Experience the future of healthcare with AI-powered diagnostics and interactive 3D anatomy</p>
+        </div>
+    </section>
+
+    <!-- 3D Anatomy Model Section -->
+    <section class="anatomy-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">3D Anatomy Explorer</h2>
+            <div class="glass-card" style="max-width: 1200px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+                    <div>
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Interactive Human Anatomy</h3>
+                        <p style="margin-bottom: 1rem;">Explore detailed 3D models of human organs and systems.</p>
+                        <p style="margin-bottom: 1rem;">Currently viewing: <strong id="current-organ">Heart</strong></p>
+                        <div style="margin-bottom: 1rem;">
+                            <button class="btn btn-secondary" onclick="changeOrgan('heart')" style="margin: 0.25rem;">Heart</button>
+                            <button class="btn btn-secondary" onclick="changeOrgan('brain')" style="margin: 0.25rem;">Brain</button>
+                            <button class="btn btn-secondary" onclick="changeOrgan('lungs')" style="margin: 0.25rem;">Lungs</button>
+                        </div>
+                        <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                            <p>🖱️ Click and drag to rotate</p>
+                            <p>🔍 Scroll to zoom in/out</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="threejs-container" style="width: 100%; height: 400px; border-radius: 0.5rem; overflow: hidden; background: var(--bg-tertiary);"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Symptom Checker Section -->
+    <section class="symptom-checker-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">AI Symptom Checker</h2>
+            <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                <div style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 2rem; border-radius: 1rem; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem;">🤖 Intelligent Diagnosis Assistant</h3>
+                        <p>Answer 3 simple questions to get personalized specialist recommendations</p>
+                    </div>
+                    
+                    <div id="symptom-form">
+                        <div id="symptom-question" style="font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem; color: var(--text-primary);">
+                            Loading question...
+                        </div>
+                        <div id="symptom-options" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;">
+                            <!-- Options will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 2rem; padding: 1rem; background: var(--glass-bg); border-radius: 0.5rem; border: 1px solid var(--glass-border);">
+                        <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                            <strong>⚠️ Medical Disclaimer:</strong> This AI assistant provides recommendations based on symptom patterns. 
+                            It is not a substitute for professional medical diagnosis.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Navigation Button -->
+    <button class="voice-nav-toggle" aria-label="Voice navigation">🎙️</button>
+
+    <!-- Eye Tracking Toggle -->
+    <button class="eye-tracking-toggle" aria-label="Toggle eye tracking">
+        👁️‍🗨️
+    </button>
+
+    <!-- Gaze Cursor -->
+    <div class="gaze-cursor"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            ⚠️ Demo Only - This is a demonstration website. No real patient data is stored or processed.
+        </div>
+        <div class="footer-content">
+            <p>&copy; 2024 Apex Medical Center. Future of Healthcare Technology.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Three.js Anatomy Visualizer -->
+    <script>
+        let scene, camera, renderer, mesh;
+        let currentOrganType = 'heart';
+        
+        function initThreeJS() {
+            const container = document.getElementById('threejs-container');
+            if (!container) return;
+            
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue('--bg-tertiary'));
+            
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            container.appendChild(renderer.domElement);
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            createOrgan(currentOrganType);
+            
+            let mouseX = 0, mouseY = 0;
+            let isMouseDown = false;
+            
+            container.addEventListener('mousedown', () => isMouseDown = true);
+            container.addEventListener('mouseup', () => isMouseDown = false);
+            container.addEventListener('mouseleave', () => isMouseDown = false);
+            
+            container.addEventListener('mousemove', (event) => {
+                if (isMouseDown) {
+                    mouseX = (event.offsetX / container.clientWidth) * 2 - 1;
+                    mouseY = -(event.offsetY / container.clientHeight) * 2 + 1;
+                }
+            });
+            
+            container.addEventListener('wheel', (event) => {
+                event.preventDefault();
+                camera.position.z += event.deltaY * 0.01;
+                camera.position.z = Math.max(2, Math.min(10, camera.position.z));
+            });
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                if (mesh) {
+                    if (!isMouseDown) {
+                        mesh.rotation.x += 0.005;
+                        mesh.rotation.y += 0.01;
+                    } else {
+                        mesh.rotation.y = mouseX * Math.PI;
+                        mesh.rotation.x = mouseY * Math.PI;
+                    }
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+        }
+        
+        function createOrgan(type) {
+            if (mesh) {
+                scene.remove(mesh);
+            }
+            
+            let geometry, material;
+            
+            switch(type) {
+                case 'heart':
+                    geometry = new THREE.SphereGeometry(1.5, 32, 32);
+                    geometry.scale(1, 1.2, 0.8);
+                    material = new THREE.MeshPhongMaterial({ 
+                        color: 0xff4444,
+                        wireframe: false,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    break;
+                    
+                case 'brain':
+                    geometry = new THREE.SphereGeometry(1.8, 32, 32);
+                    geometry.scale(0.8, 1, 0.9);
+                    material = new THREE.MeshPhongMaterial({ 
+                        color: 0xffaaaa,
+                        wireframe: false,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    break;
+                    
+                case 'lungs':
+                    const lungsGroup = new THREE.Group();
+                    const lungGeometry = new THREE.SphereGeometry(1.2, 32, 32);
+                    lungGeometry.scale(0.8, 1.5, 1);
+                    const lungMaterial = new THREE.MeshPhongMaterial({ 
+                        color: 0xff88cc,
+                        wireframe: false,
+                        transparent: true,
+                        opacity: 0.8
+                    });
+                    
+                    const leftLung = new THREE.Mesh(lungGeometry, lungMaterial);
+                    leftLung.position.x = -0.8;
+                    lungsGroup.add(leftLung);
+                    
+                    const rightLung = new THREE.Mesh(lungGeometry, lungMaterial);
+                    rightLung.position.x = 0.8;
+                    lungsGroup.add(rightLung);
+                    
+                    mesh = lungsGroup;
+                    scene.add(mesh);
+                    return;
+            }
+            
+            mesh = new THREE.Mesh(geometry, material);
+            
+            const wireframeMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffffff, 
+                wireframe: true,
+                transparent: true,
+                opacity: 0.2
+            });
+            const wireframeMesh = new THREE.Mesh(geometry, wireframeMaterial);
+            
+            const group = new THREE.Group();
+            group.add(mesh);
+            group.add(wireframeMesh);
+            
+            mesh = group;
+            scene.add(mesh);
+        }
+        
+        function changeOrgan(type) {
+            currentOrganType = type;
+            document.getElementById('current-organ').textContent = type.charAt(0).toUpperCase() + type.slice(1);
+            createOrgan(type);
+        }
+        
+        // Initialize Three.js when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(initThreeJS, 100);
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (camera && renderer) {
+                const container = document.getElementById('threejs-container');
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            }
+        });
+    </script>
+</body>
+</html>

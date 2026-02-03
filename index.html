@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Medical Center - The Future of Care</title>
+    <meta name="description" content="Experience the future of healthcare at Apex Medical Center with AI-powered diagnostics, virtual tours, and smart appointments.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Apex Medical Center - The Future of Care">
+    <meta property="og:description" content="Revolutionary healthcare experience with AI, 3D anatomy, and voice interfaces">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- WebGazer.js for Eye Tracking -->
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="script.js" as="script">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                <span class="nav-logo-text">Apex Medical Center</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="map.html" class="nav-link">Map</a></li>
+                <li><a href="booking.html" class="nav-link">Book</a></li>
+                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Apex Medical Center<br>The Future of Care</h1>
+            <p class="hero-subtitle">Experience revolutionary healthcare with AI-powered diagnostics, 3D anatomy visualization, and intelligent voice interfaces</p>
+            <div class="hero-actions">
+                <a href="services.html" class="btn">Explore Services</a>
+                <a href="booking.html" class="btn btn-secondary">Book Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Dashboard -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Real-Time Hospital Dashboard</h2>
+            <div class="bento-grid">
+                <!-- ER Wait Time -->
+                <div class="bento-item">
+                    <div class="bento-title">ER Wait Time</div>
+                    <div class="bento-value" id="er-wait-time">-- min</div>
+                    <div class="bento-status">Loading...</div>
+                </div>
+                
+                <!-- ICU Capacity -->
+                <div class="bento-item">
+                    <div class="bento-title">ICU Capacity</div>
+                    <div class="bento-value" id="icu-capacity">--%</div>
+                    <div class="bento-status">Loading...</div>
+                </div>
+                
+                <!-- Active Ambulances -->
+                <div class="bento-item">
+                    <div class="bento-title">Active Ambulances</div>
+                    <div class="bento-value" id="active-ambulances">--</div>
+                    <div class="bento-status">Loading...</div>
+                </div>
+                
+                <!-- Today's Appointments -->
+                <div class="bento-item">
+                    <div class="bento-title">Today's Appointments</div>
+                    <div class="bento-value">247</div>
+                    <div class="bento-status">12 completed this hour</div>
+                </div>
+                
+                <!-- Patient Satisfaction -->
+                <div class="bento-item">
+                    <div class="bento-title">Patient Satisfaction</div>
+                    <div class="bento-value">98.5%</div>
+                    <div class="bento-status">Based on 1,247 reviews</div>
+                </div>
+                
+                <!-- AI Diagnostics -->
+                <div class="bento-item">
+                    <div class="bento-title">AI Diagnostics</div>
+                    <div class="bento-value">Active</div>
+                    <div class="bento-status">3,421 analyses today</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Revolutionary Features</h2>
+            <div class="bento-grid">
+                <div class="glass-card">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🤖 AI Symptom Checker</h3>
+                    <p>Get instant recommendations with our advanced AI-powered diagnostic system. Answer a few questions and receive specialist suggestions.</p>
+                    <a href="services.html" class="btn" style="margin-top: 1rem;">Try Now</a>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🧬 3D Anatomy Explorer</h3>
+                    <p>Interactive 3D models of human anatomy. Explore organs and systems in stunning detail with our WebGL-powered visualization.</p>
+                    <a href="services.html" class="btn" style="margin-top: 1rem;">Explore</a>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🗺️ Virtual Hospital Tour</h3>
+                    <p>Navigate our facility with interactive floor maps. Find departments, rooms, and services with real-time availability.</p>
+                    <a href="map.html" class="btn" style="margin-top: 1rem;">Take Tour</a>
+                </div>
+                
+                <div class="glass-card">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🎙️ Voice Interface</h3>
+                    <p>Book appointments and get assistance using natural voice commands. Our system understands emergency situations and responds immediately.</p>
+                    <a href="booking.html" class="btn" style="margin-top: 1rem;">Try Voice</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Navigation Button -->
+    <button class="voice-nav-toggle" aria-label="Voice navigation">🎙️</button>
+
+    <!-- Eye Tracking Toggle -->
+    <button class="eye-tracking-toggle" aria-label="Toggle eye tracking">
+        👁️‍🗨️
+    </button>
+
+    <!-- Gaze Cursor -->
+    <div class="gaze-cursor"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            ⚠️ Demo Only - This is a demonstration website. No real patient data is stored or processed.
+        </div>
+        <div class="footer-content">
+            <p>&copy; 2024 Apex Medical Center. Future of Healthcare Technology.</p>
+            <p>This is a demonstration project showcasing modern web technologies in healthcare.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Hospital",
+        "name": "Apex Medical Center",
+        "description": "Revolutionary healthcare with AI, 3D visualization, and voice interfaces",
+        "url": "https://apexmedical.demo",
+        "medicalSpecialty": ["General Practice", "Emergency Medicine", "Cardiology", "Neurology"],
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Medical Services",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "AI Symptom Checker"
+                    }
+                },
+                {
+                    "@type": "Offer", 
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "3D Anatomy Visualization"
+                    }
+                }
+            ]
+        }
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Navigation - Apex Medical Center</title>
+    <meta name="description" content="Interactive hospital floor map and virtual tour at Apex Medical Center">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="script.js" as="script">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                <span class="nav-logo-text">Apex Medical Center</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="map.html" class="nav-link active">Map</a></li>
+                <li><a href="booking.html" class="nav-link">Book</a></li>
+                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 60vh;">
+        <div class="hero-content">
+            <h1 class="hero-title">Digital Hospital Navigation</h1>
+            <p class="hero-subtitle">Explore our facility with interactive maps and discover the history of medical innovation</p>
+        </div>
+    </section>
+
+    <!-- Interactive SVG Map Section -->
+    <section class="map-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Interactive Floor Map</h2>
+            <div class="glass-card" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <p style="color: var(--text-secondary);">Hover over rooms to highlight and see details</p>
+                </div>
+                
+                <!-- SVG Hospital Floor Plan -->
+                <svg id="hospital-map" viewBox="0 0 800 600" style="width: 100%; height: auto; max-height: 600px;">
+                    <!-- Background -->
+                    <rect width="800" height="600" fill="var(--bg-tertiary)" stroke="var(--glass-border)" stroke-width="2"/>
+                    
+                    <!-- Emergency Room -->
+                    <g class="room" data-room="er">
+                        <rect x="50" y="50" width="150" height="100" fill="var(--danger-color)" fill-opacity="0.3" stroke="var(--danger-color)" stroke-width="2" rx="5"/>
+                        <text x="125" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Emergency</text>
+                        <text x="125" y="120" text-anchor="middle" fill="var(--text-secondary)" font-size="12">ER</text>
+                    </g>
+                    
+                    <!-- Pharmacy -->
+                    <g class="room" data-room="pharmacy">
+                        <rect x="250" y="50" width="120" height="100" fill="var(--primary-color)" fill-opacity="0.3" stroke="var(--primary-color)" stroke-width="2" rx="5"/>
+                        <text x="310" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Pharmacy</text>
+                        <text x="310" y="120" text-anchor="middle" fill="var(--text-secondary)" font-size="12">24/7</text>
+                    </g>
+                    
+                    <!-- Reception -->
+                    <g class="room" data-room="reception">
+                        <rect x="430" y="50" width="140" height="100" fill="var(--accent-color)" fill-opacity="0.3" stroke="var(--accent-color)" stroke-width="2" rx="5"/>
+                        <text x="500" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Reception</text>
+                        <text x="500" y="120" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Main Entrance</text>
+                    </g>
+                    
+                    <!-- Cafeteria -->
+                    <g class="room" data-room="cafeteria">
+                        <rect x="630" y="50" width="120" height="100" fill="var(--warning-color)" fill-opacity="0.3" stroke="var(--warning-color)" stroke-width="2" rx="5"/>
+                        <text x="690" y="100" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Cafeteria</text>
+                        <text x="690" y="120" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Ground Floor</text>
+                    </g>
+                    
+                    <!-- ICU -->
+                    <g class="room" data-room="icu">
+                        <rect x="50" y="200" width="150" height="120" fill="var(--secondary-color)" fill-opacity="0.3" stroke="var(--secondary-color)" stroke-width="2" rx="5"/>
+                        <text x="125" y="260" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">ICU</text>
+                        <text x="125" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Critical Care</text>
+                    </g>
+                    
+                    <!-- Surgery -->
+                    <g class="room" data-room="surgery">
+                        <rect x="250" y="200" width="120" height="120" fill="var(--primary-color)" fill-opacity="0.3" stroke="var(--primary-color)" stroke-width="2" rx="5"/>
+                        <text x="310" y="260" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Surgery</text>
+                        <text x="310" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="12">OR 1-4</text>
+                    </g>
+                    
+                    <!-- Radiology -->
+                    <g class="room" data-room="radiology">
+                        <rect x="430" y="200" width="140" height="120" fill="var(--accent-color)" fill-opacity="0.3" stroke="var(--accent-color)" stroke-width="2" rx="5"/>
+                        <text x="500" y="260" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Radiology</text>
+                        <text x="500" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="12">MRI/CT/X-Ray</text>
+                    </g>
+                    
+                    <!-- Laboratory -->
+                    <g class="room" data-room="laboratory">
+                        <rect x="630" y="200" width="120" height="120" fill="var(--success-color)" fill-opacity="0.3" stroke="var(--success-color)" stroke-width="2" rx="5"/>
+                        <text x="690" y="260" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Laboratory</text>
+                        <text x="690" y="280" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Pathology</text>
+                    </g>
+                    
+                    <!-- Patient Rooms -->
+                    <g class="room" data-room="patient-rooms">
+                        <rect x="50" y="380" width="200" height="150" fill="var(--glass-bg)" fill-opacity="0.5" stroke="var(--glass-border)" stroke-width="2" rx="5"/>
+                        <text x="150" y="455" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Patient Rooms</text>
+                        <text x="150" y="475" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Rooms 201-250</text>
+                    </g>
+                    
+                    <!-- Physical Therapy -->
+                    <g class="room" data-room="therapy">
+                        <rect x="300" y="380" width="150" height="150" fill="var(--primary-color)" fill-opacity="0.3" stroke="var(--primary-color)" stroke-width="2" rx="5"/>
+                        <text x="375" y="455" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Physical Therapy</text>
+                        <text x="375" y="475" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Rehab Center</text>
+                    </g>
+                    
+                    <!-- Administration -->
+                    <g class="room" data-room="admin">
+                        <rect x="500" y="380" width="250" height="150" fill="var(--glass-bg)" fill-opacity="0.5" stroke="var(--glass-border)" stroke-width="2" rx="5"/>
+                        <text x="625" y="455" text-anchor="middle" fill="var(--text-primary)" font-size="14" font-weight="bold">Administration</text>
+                        <text x="625" y="475" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Offices & Conference Rooms</text>
+                    </g>
+                    
+                    <!-- Corridors -->
+                    <rect x="200" y="90" width="50" height="20" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="370" y="90" width="60" height="20" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="200" y="240" width="50" height="40" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="370" y="240" width="60" height="40" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="125" y="150" width="50" height="50" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="310" y="150" width="50" height="50" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="500" y="150" width="50" height="50" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="690" y="150" width="50" height="50" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="125" y="320" width="50" height="60" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="310" y="320" width="50" height="60" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="500" y="320" width="50" height="60" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                    <rect x="690" y="320" width="50" height="60" fill="var(--glass-bg)" stroke="var(--glass-border)"/>
+                </svg>
+                
+                <!-- Room Information Panel -->
+                <div id="room-info" style="margin-top: 2rem; padding: 1.5rem; background: var(--glass-bg); border-radius: 0.5rem; border: 1px solid var(--glass-border); min-height: 100px;">
+                    <h3 id="room-name" style="color: var(--primary-color); margin-bottom: 0.5rem;">Hover over a room</h3>
+                    <p id="room-description" style="color: var(--text-secondary);">Move your cursor over any room to see detailed information</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hospital History Section with Scroll Animations -->
+    <section class="history-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Hospital History Timeline</h2>
+            
+            <div class="history-timeline" style="max-width: 1000px; margin: 0 auto;">
+                <!-- History Card 1 -->
+                <div class="history-card glass-card" style="margin-bottom: 2rem; opacity: 0; transform: translateY(50px);">
+                    <div style="display: flex; align-items: center; gap: 2rem;">
+                        <div style="font-size: 3rem;">🏛️</div>
+                        <div>
+                            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">1965 - Foundation</h3>
+                            <p>Apex Medical Center was founded with a vision to revolutionize healthcare through innovation and compassion. Started with just 50 beds and 12 doctors.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- History Card 2 -->
+                <div class="history-card glass-card" style="margin-bottom: 2rem; opacity: 0; transform: translateY(50px);">
+                    <div style="display: flex; align-items: center; gap: 2rem;">
+                        <div style="font-size: 3rem;">🔬</div>
+                        <div>
+                            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">1985 - Research Excellence</h3>
+                            <p>Established the Apex Research Institute, pioneering breakthrough treatments in cardiology and neurology. Published over 200 research papers.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- History Card 3 -->
+                <div class="history-card glass-card" style="margin-bottom: 2rem; opacity: 0; transform: translateY(50px);">
+                    <div style="display: flex; align-items: center; gap: 2rem;">
+                        <div style="font-size: 3rem;">💻</div>
+                        <div>
+                            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">2005 - Digital Transformation</h3>
+                            <p>Became the first hospital in the region to implement fully electronic health records and telemedicine capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- History Card 4 -->
+                <div class="history-card glass-card" style="margin-bottom: 2rem; opacity: 0; transform: translateY(50px);">
+                    <div style="display: flex; align-items: center; gap: 2rem;">
+                        <div style="font-size: 3rem;">🤖</div>
+                        <div>
+                            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">2024 - AI Integration</h3>
+                            <p>Launched revolutionary AI-powered diagnostic systems and 3D anatomy visualization, setting new standards in medical technology.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- History Card 5 -->
+                <div class="history-card glass-card" style="margin-bottom: 2rem; opacity: 0; transform: translateY(50px);">
+                    <div style="display: flex; align-items: center; gap: 2rem;">
+                        <div style="font-size: 3rem;">🚀</div>
+                        <div>
+                            <h3 style="color: var(--primary-color); margin-bottom: 0.5rem;">Future - Vision 2030</h3>
+                            <p>Expanding to include robotic surgery, gene therapy, and quantum computing for personalized medicine. The future of healthcare starts here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Virtual Tour Section -->
+    <section class="tour-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Virtual Tour Experience</h2>
+            <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🎥 360° Hospital Tour</h3>
+                <p style="margin-bottom: 2rem;">Take a comprehensive virtual tour of our state-of-the-art facility. Explore patient rooms, surgical suites, and advanced diagnostic centers.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <button class="btn btn-secondary" onclick="showTourPreview('emergency')">Emergency Room</button>
+                    <button class="btn btn-secondary" onclick="showTourPreview('surgery')">Surgery Suite</button>
+                    <button class="btn btn-secondary" onclick="showTourPreview('icu')">ICU Ward</button>
+                    <button class="btn btn-secondary" onclick="showTourPreview('pharmacy')">Pharmacy</button>
+                </div>
+                <div id="tour-preview" style="padding: 2rem; background: var(--glass-bg); border-radius: 0.5rem; border: 1px solid var(--glass-border); min-height: 200px;">
+                    <p style="color: var(--text-secondary);">Select an area above to preview the virtual tour</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Navigation Button -->
+    <button class="voice-nav-toggle" aria-label="Voice navigation">🎙️</button>
+
+    <!-- Eye Tracking Toggle -->
+    <button class="eye-tracking-toggle" aria-label="Toggle eye tracking">
+        👁️‍🗨️
+    </button>
+
+    <!-- Gaze Cursor -->
+    <div class="gaze-cursor"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            ⚠️ Demo Only - This is a demonstration website. No real patient data is stored or processed.
+        </div>
+        <div class="footer-content">
+            <p>&copy; 2024 Apex Medical Center. Future of Healthcare Technology.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Interactive Map and GSAP Animations -->
+    <script>
+        // Room Information Data
+        const roomData = {
+            'er': {
+                name: 'Emergency Room',
+                description: '24/7 emergency medical care with trauma specialists, diagnostic imaging, and immediate life support systems. Average wait time: 15 minutes.',
+                status: 'Active',
+                capacity: '20 beds'
+            },
+            'pharmacy': {
+                name: 'Pharmacy',
+                description: 'Full-service pharmacy with prescription fulfillment, medication counseling, and over-the-counter medications. Automated dispensing system for accuracy.',
+                status: 'Open 24/7',
+                capacity: '4 pharmacists on duty'
+            },
+            'reception': {
+                name: 'Main Reception',
+                description: 'Central check-in point for all patients and visitors. Multilingual staff, digital registration kiosks, and wayfinding assistance.',
+                status: 'Open',
+                capacity: '6 receptionists'
+            },
+            'cafeteria': {
+                name: 'Cafeteria',
+                description: 'Nutritious meals and snacks for patients, visitors, and staff. Special dietary accommodations available. Open 6 AM - 10 PM.',
+                status: 'Open',
+                capacity: '150 seats'
+            },
+            'icu': {
+                name: 'Intensive Care Unit',
+                description: 'Critical care monitoring with advanced life support systems. 1:1 nurse-to-patient ratio. Specialized in cardiac, neurological, and respiratory care.',
+                status: '76% occupied',
+                capacity: '24 beds'
+            },
+            'surgery': {
+                name: 'Surgery Department',
+                description: '4 state-of-the-art operating rooms with robotic surgery capabilities. Specialized in minimally invasive procedures and complex surgeries.',
+                status: '2 surgeries today',
+                capacity: '4 ORs'
+            },
+            'radiology': {
+                name: 'Radiology Department',
+                description: 'Advanced imaging including 3T MRI, 128-slice CT, digital X-ray, and ultrasound. PACS integration for instant results.',
+                status: 'Open',
+                capacity: '8 imaging suites'
+            },
+            'laboratory': {
+                name: 'Clinical Laboratory',
+                description: 'Comprehensive diagnostic testing with automated analyzers. Specialized in pathology, genetics, and molecular diagnostics.',
+                status: 'Processing samples',
+                capacity: '12 technicians'
+            },
+            'patient-rooms': {
+                name: 'Patient Rooms',
+                description: 'Private and semi-private rooms with smart beds, entertainment systems, and room service. All rooms equipped with telemedicine capabilities.',
+                status: '82% occupied',
+                capacity: '50 rooms'
+            },
+            'therapy': {
+                name: 'Physical Therapy',
+                description: 'Rehabilitation services with advanced equipment. Specialized in orthopedic, neurological, and cardiac rehabilitation programs.',
+                status: 'Open',
+                capacity: '6 therapy bays'
+            },
+            'admin': {
+                name: 'Administration',
+                description: 'Hospital management offices, conference rooms, and administrative support services. Medical records, billing, and patient services.',
+                status: 'Open',
+                capacity: '40 offices'
+            }
+        };
+        
+        // Initialize Interactive Map
+        function initializeMap() {
+            const rooms = document.querySelectorAll('.room');
+            const roomName = document.getElementById('room-name');
+            const roomDescription = document.getElementById('room-description');
+            
+            rooms.forEach(room => {
+                room.addEventListener('mouseenter', function() {
+                    const roomType = this.getAttribute('data-room');
+                    const data = roomData[roomType];
+                    
+                    if (data) {
+                        roomName.textContent = data.name;
+                        roomDescription.innerHTML = `
+                            <p>${data.description}</p>
+                            <p style="margin-top: 0.5rem;"><strong>Status:</strong> ${data.status}</p>
+                            <p><strong>Capacity:</strong> ${data.capacity}</p>
+                        `;
+                        
+                        // Highlight the room
+                        this.style.filter = 'brightness(1.3)';
+                        this.style.transform = 'scale(1.05)';
+                        this.style.transition = 'all 0.3s ease';
+                    }
+                });
+                
+                room.addEventListener('mouseleave', function() {
+                    this.style.filter = '';
+                    this.style.transform = '';
+                    
+                    roomName.textContent = 'Hover over a room';
+                    roomDescription.textContent = 'Move your cursor over any room to see detailed information';
+                });
+                
+                room.addEventListener('click', function() {
+                    const roomType = this.getAttribute('data-room');
+                    const data = roomData[roomType];
+                    if (data) {
+                        console.log(`Room clicked: ${data.name}`);
+                        // Could navigate to a detailed room view
+                    }
+                });
+            });
+        }
+        
+        // Initialize GSAP Scroll Animations
+        function initializeScrollAnimations() {
+            // Register ScrollTrigger plugin
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate history cards
+            gsap.utils.toArray('.history-card').forEach((card, index) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
+            });
+            
+            // Parallax effect for hero section
+            gsap.to('.hero-title', {
+                y: -50,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true
+                }
+            });
+            
+            // Animate map sections
+            gsap.from('.map-section .glass-card', {
+                opacity: 0,
+                scale: 0.9,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: '.map-section',
+                    start: 'top 70%',
+                    end: 'bottom 30%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        }
+        
+        // Virtual Tour Preview
+        function showTourPreview(area) {
+            const preview = document.getElementById('tour-preview');
+            const tourData = {
+                'emergency': {
+                    title: 'Emergency Room Tour',
+                    description: 'Experience our state-of-the-art ER with trauma bays, rapid assessment areas, and dedicated pediatric emergency section.',
+                    features: ['4 trauma bays', '2 rapid assessment rooms', 'Pediatric ER section', 'Decontamination unit']
+                },
+                'surgery': {
+                    title: 'Surgery Suite Tour',
+                    description: 'Explore our advanced operating rooms with robotic surgery systems and minimally invasive equipment.',
+                    features: ['4 hybrid ORs', 'Da Vinci surgical system', 'Advanced imaging integration', 'Recovery rooms']
+                },
+                'icu': {
+                    title: 'ICU Ward Tour',
+                    description: 'Tour our critical care unit with advanced monitoring systems and private patient rooms.',
+                    features: ['24 private rooms', 'Advanced monitoring', 'Isolation rooms', 'Family consultation areas']
+                },
+                'pharmacy': {
+                    title: 'Pharmacy Tour',
+                    description: 'Visit our modern pharmacy with automated dispensing systems and sterile compounding areas.',
+                    features: ['Automated dispensing', 'Sterile compounding', 'Medication counseling', 'Clinical pharmacy services']
+                }
+            };
+            
+            const data = tourData[area];
+            if (data) {
+                preview.innerHTML = `
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem;">${data.title}</h4>
+                    <p style="margin-bottom: 1rem;">${data.description}</p>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; text-align: left;">
+                        ${data.features.map(feature => `<div style="padding: 0.5rem; background: var(--glass-bg); border-radius: 0.25rem;">✅ ${feature}</div>`).join('')}
+                    </div>
+                    <button class="btn" style="margin-top: 1rem;">Start Full Tour</button>
+                `;
+                
+                // Animate the preview
+                gsap.from(preview, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.5,
+                    ease: 'power2.out'
+                });
+            }
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMap();
+            initializeScrollAnimations();
+        });
+    </script>
+</body>
+</html>

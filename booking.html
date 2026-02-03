@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - Apex Medical Center</title>
+    <meta name="description" content="Book appointments with voice interface at Apex Medical Center">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="script.js" as="script">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="nav-logo-icon"></div>
+                <span class="nav-logo-text">Apex Medical Center</span>
+            </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">☰</button>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="services.html" class="nav-link">Services</a></li>
+                <li><a href="map.html" class="nav-link">Map</a></li>
+                <li><a href="booking.html" class="nav-link active">Book</a></li>
+                <li><button class="theme-toggle" aria-label="Toggle theme">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" style="min-height: 60vh;">
+        <div class="hero-content">
+            <h1 class="hero-title">Smart Appointments</h1>
+            <p class="hero-subtitle">Book your appointment with our traditional form</p>
+        </div>
+    </section>
+
+    <!-- Traditional Booking Form Section -->
+    <section class="booking-form-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Appointment Booking Form</h2>
+            <div class="glass-card" style="max-width: 600px; margin: 0 auto;">
+                <form id="appointment-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name *</label>
+                        <input type="text" id="name" name="name" class="form-input" required placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email Address *</label>
+                        <input type="email" id="email" name="email" class="form-input" required placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number *</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" required placeholder="(555) 123-4567">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="department" class="form-label">Department *</label>
+                        <select id="department" name="department" class="form-select" required>
+                            <option value="">Select a department</option>
+                            <option value="emergency">Emergency Medicine</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="pediatrics">Pediatrics</option>
+                            <option value="radiology">Radiology</option>
+                            <option value="laboratory">Laboratory Services</option>
+                            <option value="physical-therapy">Physical Therapy</option>
+                            <option value="general">General Practice</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="doctor" class="form-label">Preferred Doctor (Optional)</label>
+                        <select id="doctor" name="doctor" class="form-select">
+                            <option value="">No preference</option>
+                            <option value="dr-smith">Dr. Sarah Smith - Cardiology</option>
+                            <option value="dr-johnson">Dr. Michael Johnson - Neurology</option>
+                            <option value="dr-williams">Dr. Emily Williams - Emergency Medicine</option>
+                            <option value="dr-brown">Dr. James Brown - Orthopedics</option>
+                            <option value="dr-davis">Dr. Lisa Davis - Pediatrics</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="date" class="form-label">Preferred Date *</label>
+                        <input type="date" id="date" name="date" class="form-input" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time" class="form-label">Preferred Time *</label>
+                        <select id="time" name="time" class="form-select" required>
+                            <option value="">Select a time</option>
+                            <option value="08:00">8:00 AM</option>
+                            <option value="08:30">8:30 AM</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="09:30">9:30 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="10:30">10:30 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="11:30">11:30 AM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="14:30">2:30 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="15:30">3:30 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="16:30">4:30 PM</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="symptoms" class="form-label">Symptoms / Reason for Visit</label>
+                        <textarea id="symptoms" name="symptoms" class="form-input" rows="4" placeholder="Please describe your symptoms or reason for visit..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="insurance" class="form-label">Insurance Provider (Optional)</label>
+                        <input type="text" id="insurance" name="insurance" class="form-input" placeholder="Insurance company name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="urgency" class="form-label">Urgency Level</label>
+                        <select id="urgency" name="urgency" class="form-select">
+                            <option value="routine">Routine Check-up</option>
+                            <option value="soon">Within 2 weeks</option>
+                            <option value="urgent">Within 48 hours</option>
+                            <option value="emergency">Emergency</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="consent" name="consent" required style="width: auto;">
+                            <span style="font-size: 0.875rem; color: var(--text-secondary);">
+                                I consent to the processing of my personal information for appointment scheduling purposes.
+                            </span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; padding: 1rem;">
+                        Book Appointment
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Appointments Section -->
+    <section class="available-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 3rem; color: var(--text-primary);">Available Time Slots</h2>
+            <div class="glass-card" style="max-width: 800px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Today - Real-time Availability</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('08:00')">8:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('08:30')">8:30 AM</button>
+                        <button class="btn btn-danger" onclick="selectTimeSlot('09:00')" disabled>9:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('09:30')">9:30 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('10:00')">10:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('10:30')">10:30 AM</button>
+                        <button class="btn btn-danger" onclick="selectTimeSlot('11:00')" disabled>11:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('11:30')">11:30 AM</button>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Tomorrow</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.5rem;">
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('08:00')">8:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('08:30')">8:30 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('09:00')">9:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('09:30')">9:30 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('10:00')">10:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('10:30')">10:30 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('11:00')">11:00 AM</button>
+                        <button class="btn btn-secondary" onclick="selectTimeSlot('11:30')">11:30 AM</button>
+                    </div>
+                </div>
+                
+                <div style="padding: 1rem; background: var(--glass-bg); border-radius: 0.5rem; border: 1px solid var(--glass-border);">
+                    <p style="font-size: 0.875rem; color: var(--text-secondary);">
+                        <strong>Legend:</strong> 
+                        <span style="color: var(--primary-color);">Available</span> | 
+                        <span style="color: var(--danger-color);">Booked</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Quick Actions -->
+    <section class="emergency-section" style="padding: 4rem 2rem;">
+        <div class="container">
+            <div class="glass-card" style="max-width: 600px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, var(--danger-color), #ff6b7a); color: white;">
+                <h3 style="margin-bottom: 1rem;">🚨 Emergency Services</h3>
+                <p style="margin-bottom: 2rem;">If you are experiencing a medical emergency, do not wait for an appointment.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                    <button class="btn" style="background: white; color: var(--danger-color);" onclick="callEmergency()">
+                        📞 Call 911
+                    </button>
+                    <button class="btn" style="background: white; color: var(--danger-color);" onclick="goToER()">
+                        🏥 Go to ER
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Navigation Button -->
+    <button class="voice-nav-toggle" aria-label="Voice navigation">🎙️</button>
+
+    <!-- Eye Tracking Toggle -->
+    <button class="eye-tracking-toggle" aria-label="Toggle eye tracking">
+        👁️‍🗨️
+    </button>
+
+    <!-- Gaze Cursor -->
+    <div class="gaze-cursor"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-disclaimer">
+            ⚠️ Demo Only - This is a demonstration website. No real patient data is stored or processed.
+        </div>
+        <div class="footer-content">
+            <p>&copy; 2024 Apex Medical Center. Future of Healthcare Technology.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    
+    <!-- Booking Page Specific JavaScript -->
+    <script>
+        // Initialize booking form
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date to today
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.min = today;
+                dateInput.value = today;
+            }
+            
+            // Initialize form handling
+            ApexMedical.handleFormSubmit('#appointment-form', 'Appointment booked successfully! We will send you a confirmation email shortly.');
+            
+            // Update voice status
+            updateVoiceStatus();
+        });
+        
+        // Update voice status display
+        function updateVoiceStatus() {
+            const voiceStatus = document.getElementById('voice-status');
+            if (voiceStatus) {
+                const isListening = document.querySelector('.voice-button.listening');
+                if (isListening) {
+                    voiceStatus.innerHTML = '<p style="color: var(--primary-color);">🎤 Listening... Speak your command now</p>';
+                } else {
+                    voiceStatus.innerHTML = '<p style="color: var(--text-secondary);">Click the microphone button to start voice booking</p>';
+                }
+            }
+        }
+        
+        // Override voice functions to update status
+        const originalStartVoiceListening = ApexMedical.startVoiceListening;
+        ApexMedical.startVoiceListening = function() {
+            originalStartVoiceListening();
+            updateVoiceStatus();
+        };
+        
+        const originalStopVoiceListening = ApexMedical.stopVoiceListening;
+        ApexMedical.stopVoiceListening = function() {
+            originalStopVoiceListening();
+            updateVoiceStatus();
+        };
+        
+        // Select time slot function
+        function selectTimeSlot(time) {
+            const timeInput = document.getElementById('time');
+            if (timeInput) {
+                timeInput.value = time;
+                timeInput.focus();
+                
+                // Scroll to form
+                document.getElementById('appointment-form').scrollIntoView({ behavior: 'smooth' });
+                
+                // Visual feedback
+                timeInput.style.borderColor = 'var(--success-color)';
+                setTimeout(() => {
+                    timeInput.style.borderColor = '';
+                }, 2000);
+            }
+        }
+        
+        // Emergency functions
+        function callEmergency() {
+            console.log('Emergency call initiated - Demo only');
+            alert('🚨 Emergency Services Called\n\nIn a real emergency, this would connect you to 911.\n\nThis is a demonstration website.');
+        }
+        
+        function goToER() {
+            console.log('Navigating to emergency room - Demo only');
+            alert('🏥 Emergency Room Navigation\n\nIn a real emergency, this would provide directions to the nearest emergency room.\n\nThis is a demonstration website.');
+        }
+        
+        // Enhanced voice command handling for booking page
+        function handleVoiceCommand(event) {
+            const command = event.results[0][0].transcript.toLowerCase();
+            console.log('Voice command received:', command);
+            
+            if (command.includes('emergency')) {
+                showEmergencyModal();
+            } else if (command.includes('book')) {
+                focusBookingForm();
+            } else if (command.includes('help')) {
+                showHelpModal();
+            } else if (command.includes('cardiology')) {
+                setDepartment('cardiology');
+            } else if (command.includes('emergency') && command.includes('department')) {
+                setDepartment('emergency');
+            } else if (command.includes('today')) {
+                setTodayDate();
+            } else if (command.includes('tomorrow')) {
+                setTomorrowDate();
+            } else {
+                showVoiceFeedback(command);
+            }
+        }
+        
+        // Helper functions for voice commands
+        function setDepartment(dept) {
+            const deptSelect = document.getElementById('department');
+            if (deptSelect) {
+                deptSelect.value = dept;
+                deptSelect.focus();
+                showVoiceFeedback(`Department set to ${dept}`);
+            }
+        }
+        
+        function setTodayDate() {
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.value = today;
+                showVoiceFeedback('Date set to today');
+            }
+        }
+        
+        function setTomorrowDate() {
+            const dateInput = document.getElementById('date');
+            if (dateInput) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                dateInput.value = tomorrow.toISOString().split('T')[0];
+                showVoiceFeedback('Date set to tomorrow');
+            }
+        }
+        
+        // Update voice recognition handler
+        if (voiceRecognition) {
+            voiceRecognition.onresult = handleVoiceCommand;
+        }
+    </script>
+</body>
+</html>
