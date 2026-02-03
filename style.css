@@ -14,6 +14,8 @@
   --text-light: #ffffff;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
+  --corridor-fill: #dee2e6;
+  --corridor-stroke: #adb5bd;
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.15);
   --shadow-heavy: rgba(0, 0, 0, 0.25);
@@ -32,6 +34,8 @@
   --text-light: #ffffff;
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.1);
+  --corridor-fill: #495057;
+  --corridor-stroke: #6c757d;
   --shadow-light: rgba(0, 0, 0, 0.3);
   --shadow-medium: rgba(0, 0, 0, 0.5);
   --shadow-heavy: rgba(0, 0, 0, 0.7);
